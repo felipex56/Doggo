@@ -11,6 +11,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:doggo/models/user.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:doggo/telas/InitPage.dart';
 
 int ab = 10 ;
 int c = 12 ;
@@ -24,6 +27,11 @@ void main() async{
   class MyNewApp extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+
       return StreamProvider<User>.value(
         value: AuthService().user,
         child: MaterialApp(

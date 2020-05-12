@@ -461,9 +461,9 @@ class _AddPetState extends State<AddPet> {
                               width: 100,
                               height: 100,
                               child: _image == null
-                                  ? Image.asset("assets/imgs/default_pet.jpg")
+                                  ? Image.asset("assets/img/dogg.png")
                                   : Image.asset(
-                                "assets/imgs/logo-1.png",
+                                "assets/img/dogg.png",
                                 fit: BoxFit.contain,
                               ),
                             ),

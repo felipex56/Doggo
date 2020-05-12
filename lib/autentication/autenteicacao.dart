@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:doggo/models/user.dart';
+import 'package:flutter/foundation.dart';
 
 class AuthService{
 
@@ -49,9 +50,9 @@ class AuthService{
 
 
   //registrar email e senha
-  Future registrarComEmaileSenha(String email, String password) async{
+  Future createUserWithEmailAndPassword(String email, String password, String nome) async{
     try{
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password,);
       FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
     }catch(e){

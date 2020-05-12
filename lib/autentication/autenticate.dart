@@ -1,6 +1,6 @@
 import 'package:doggo/autentication/login.dart';
 import 'package:doggo/autentication/registro.dart';
-import 'package:doggo/LoginNew.dart';
+import 'package:doggo/autentication/LoginNew.dart';
 import 'package:flutter/material.dart';
 
 class Authenticate extends StatefulWidget {
@@ -10,15 +10,15 @@ class Authenticate extends StatefulWidget {
 
 class _AuthenticateState extends State<Authenticate> {
 
-  bool mostrarSignIn = true;
+  bool showLoginApp = true;
   void toggleView(){
-    setState(() => mostrarSignIn = !mostrarSignIn);
+    setState(() => showLoginApp = !showLoginApp);
   }
 
   @override
   Widget build(BuildContext context) {
-    if(mostrarSignIn){
-      return LoginApp(toggleView: toggleView);
+    if(showLoginApp){
+      return Login(toggleView: toggleView);
     }else{
       return Register(toggleView: toggleView);
     }

@@ -110,17 +110,23 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginApp(),
+      home: LoginAppp(),
     );
   }
 }
-
-class LoginApp extends StatefulWidget {
+class LoginAppp extends StatefulWidget {
   @override
-  _LoginAppState createState() => _LoginAppState();
+  _LoginApppState createState() => _LoginApppState();
 }
 
-class _LoginAppState extends State<LoginApp> {
+class _LoginApppState extends State<LoginAppp> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class _LoginAppState extends State<LoginAppp> {
   int _selectedIndex = 0;
   File img;
   List _recognitions;

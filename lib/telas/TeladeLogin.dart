@@ -1,4 +1,4 @@
-import 'package:doggo/LoginNew.dart';
+import 'package:doggo/autentication/LoginNew.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(new TelaLogin());
@@ -21,6 +21,6 @@ class TeladeLogin extends StatefulWidget {
 class _TeladeLoginState extends State<TeladeLogin> {
   @override
   Widget build(BuildContext context) {
-    return LoginApp();
+    return Login();
   }
 }

@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Flutter Plugins">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../flutter_windows_v1.12.13+hotfix.8-stable/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.4" />
+      <root url="file://$PROJECT_DIR$/../flutter_windows_v1.12.13+hotfix.8-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.6" />
+      <root url="file://$PROJECT_DIR$/../flutter_windows_v1.12.13+hotfix.8-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage-3.0.4" />
+      <root url="file://$PROJECT_DIR$/../flutter_windows_v1.12.13+hotfix.8-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.0+8" />
+      <root url="file://$PROJECT_DIR$/../flutter_windows_v1.12.13+hotfix.8-stable/flutter/.pub-cache/hosted/pub.dartlang.org/tflite-1.0.5" />
+      <root url="file://$PROJECT_DIR$/../flutter_windows_v1.12.13+hotfix.8-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.14.0+9" />
+      <root url="file://$PROJECT_DIR$/../flutter_windows_v1.12.13+hotfix.8-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.12.11" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

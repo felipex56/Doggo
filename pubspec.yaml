@@ -12,7 +12,8 @@ dependencies:
     sdk: flutter
 
   tflite: ^1.0.5
-  image_picker:
+  percent_indicator: ^2.1.1+1
+  image_picker: ^0.6.4
   firebase_auth: ^0.14.0+5
   cloud_firestore:
   firebase_core: 0.4.0+8
@@ -29,6 +30,7 @@ dev_dependencies:
 
 
 flutter:
+
   assets:
     - assets/img/dogg.png
     - assets/dog-breed-detector.tflite
