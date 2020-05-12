@@ -1,5 +1,7 @@
 
+import 'package:doggo/telas/InitPage.dart';
 import 'package:doggo/telas/home2.dart';
+import 'package:doggo/telas/profile.dart';
 import 'package:flutter/material.dart';
 
 class WidgetBBar extends StatefulWidget {
@@ -29,7 +31,15 @@ class _WidgetBBarState extends State<WidgetBBar> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => LoginPage()
+              builder: (context) => HomePage()
+          ),
+        );
+      }
+      if(index == 1){
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Profile()
           ),
         );
       }
