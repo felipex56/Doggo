@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doggo/telas/pets.dart';
 import 'package:flutter/material.dart';
 import 'package:doggo/telas/widgetBar.dart';
 
@@ -26,7 +27,9 @@ class _AddPetState extends State<AddPet> {
   String id;
   final db = Firestore.instance;
   final _formKey = GlobalKey<FormState>();
-  String name;
+  String local;
+  String raca;
+  String description;
 
   @override
   Widget build(BuildContext context) {
@@ -97,31 +100,6 @@ class _AddPetState extends State<AddPet> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              ToggleButtons(
-                                borderColor: Color(0xffDE985E),
-                                fillColor: Color(0xffDE985E),
-                                borderWidth: 1,
-                                color: Colors.grey,
-                                selectedBorderColor: Color(0xffDE985E),
-                                selectedColor: Colors.white,
-                                borderRadius: BorderRadius.circular(50),
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Achado',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Perdido',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                  ),
-                                ],
-                              ),
                               Container(
                                 width: 172,
                                 child: TextFormField(
@@ -135,6 +113,7 @@ class _AddPetState extends State<AddPet> {
                                     }
                                     return null;
                                   },
+                                  onSaved: (value) => local = value,
                                 ),
                               )
                             ],
@@ -154,6 +133,7 @@ class _AddPetState extends State<AddPet> {
                             }
                             return null;
                           },
+                          onSaved: (value) => raca = value,
                         ),
                       ),
                       Container(
@@ -165,6 +145,7 @@ class _AddPetState extends State<AddPet> {
                             border: OutlineInputBorder(),
                             labelText: "Descrição",
                           ),
+                          onSaved: (value) => description = value,
                         ),
                       )
                     ],
@@ -177,8 +158,23 @@ class _AddPetState extends State<AddPet> {
       ),
       bottomNavigationBar: WidgetBBar(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: createData,
         child: Icon(Icons.save),
+      ),
+    );
+  }
+
+  void createData() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      DocumentReference ref = await db.collection('Pet').add({'local': '$local', 'raca': '$raca', 'description': '$description', 'perdido': true});
+      setState(() => id = ref.documentID);
+      print(ref.documentID);
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => MyPetPage()
       ),
     );
   }
