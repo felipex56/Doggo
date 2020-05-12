@@ -11,6 +11,7 @@ class WidgetBBar extends StatefulWidget {
 
 class _WidgetBBarState extends State<WidgetBBar> {
   int _selectedIndex = 0;
+  bool active = true;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
@@ -28,7 +29,8 @@ class _WidgetBBarState extends State<WidgetBBar> {
       _selectedIndex = index;
 
 
-      if(index == 0){
+      if(index == 0 && active == false){
+        active = true;
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -36,7 +38,8 @@ class _WidgetBBarState extends State<WidgetBBar> {
           ),
         );
       }
-      if(index == 1){
+      if(index == 1 && active == true){
+        active = false;
         Navigator.push(
           context,
           MaterialPageRoute(

@@ -7,9 +7,9 @@ import 'package:doggo/telas/pets.dart';
 import 'package:flutter/material.dart';
 import 'package:doggo/telas/widgetBar.dart';
 
-void main() => runApp(new LoginPage());
+void main() => runApp(new AddPetPage());
 
-class LoginPage extends StatelessWidget {
+class AddPetPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

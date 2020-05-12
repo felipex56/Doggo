@@ -1,3 +1,4 @@
+import 'package:doggo/telas/adicionar.dart';
 import 'package:doggo/telas/pets.dart';
 import 'package:doggo/telas/widgetBar.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -156,7 +158,7 @@ class _ProfileState extends State<Profile> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(),
+            MaterialPageRoute(builder: (context) => AddPetPage()),
           );
         },
         backgroundColor: Color(0xffeb6e57),
