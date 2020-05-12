@@ -163,6 +163,7 @@ class _ProfileState extends State<Profile> {
         child: Icon(Icons.add_location),
       ),
 
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

@@ -27,6 +27,7 @@ class _WidgetBBarState extends State<WidgetBBar> {
     setState(() {
       _selectedIndex = index;
 
+
       if(index == 0){
         Navigator.push(
           context,
