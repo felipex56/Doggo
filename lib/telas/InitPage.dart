@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:doggo/autentication/autenteicacao.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:doggo/home/camera_helper.dart';
@@ -16,9 +17,11 @@ class HomePage extends StatefulWidget {
 final AuthService _auth = AuthService();
 
 
+
 class _HomePageState extends State<HomePage> {
   File _image;
   List<TFLiteResult> _outputs = [];
+
 
   @override
   void initState() {
@@ -31,6 +34,7 @@ class _HomePageState extends State<HomePage> {
     TFLiteHelper.dispose();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +104,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _pickImage() async {
+
     final image = await CameraHelper.pickImage();
     if (image == null) {
       return null;

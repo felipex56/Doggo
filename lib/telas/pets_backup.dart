@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
@@ -78,17 +79,13 @@ class _MyPetState extends State<MyPet> {
                                   Container(
                                     height: 100.0,
                                     width: 70.0,
-                                    child: FutureBuilder(
-                                      future: _buildImage(snapshot.data[index].data["image"]),
-                                      builder: (BuildContext context, AsyncSnapshot<dynamic> image) {
-                                        if (image.hasData) {
-                                          return image.data;  // image is ready
-                                        } else {
-                                          return Image.network("https://imamt.org.br/wp-content/themes/imamt/images/notfound.png",fit: BoxFit.cover,);  // placeholder
-                                        }
-                                      },
-                                    )
-                                ,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(5),
+                                            topLeft: Radius.circular(5)),
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: _buildImage(snapshot.data[index].data["image"]))),
                                   ),
                                   Container(
                                     height: 100,
@@ -178,7 +175,9 @@ class _MyPetState extends State<MyPet> {
     final ref = FirebaseStorage.instance.ref().child('pets/${name}.jpg');
 // no need of the file extension, the name will do fine.
     var url = await ref.getDownloadURL();
-    return Image.network(url,fit: BoxFit.cover,);
+    print("**********");
+    print(url);
+    return NetworkImage("https://is2-ssl.mzstatic.com/image/thumb/Video2/v4/e1/69/8b/e1698bc0-c23d-2424-40b7-527864c94a8e/pr_source.lsr/268x0w.png");
   }
 }
 
