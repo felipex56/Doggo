@@ -1,9 +1,7 @@
-import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
-import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
-
 void main() => runApp(MyApp());
 
 const kGoogleApiKey = "AIzaSyAci-DFKpBOF_eJDfU4AEuZctrB3TQ-Rk8";

@@ -10,7 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(new MyPetPage());
+//void main() => runApp(new MyPetPage());
 
 class MyPetPage extends StatelessWidget {
   @override
@@ -72,12 +72,12 @@ class _MyPetState extends State<MyPet> {
                           return Card(
                             elevation: 5,
                             child: Container(
-                              height: 100.0,
+                              height: 130.0,
                               child: Row(
                                 children: <Widget>[
                                   Container(
-                                    height: 100.0,
-                                    width: 70.0,
+                                    height: 130.0,
+                                    width: 80.0,
                                     child: FutureBuilder(
                                       future: _buildImage(snapshot.data[index].data["image"]),
                                       builder: (BuildContext context, AsyncSnapshot<dynamic> image) {
@@ -91,7 +91,7 @@ class _MyPetState extends State<MyPet> {
                                 ,
                                   ),
                                   Container(
-                                    height: 100,
+                                    height: 130,
                                     child: Padding(
                                       padding: EdgeInsets.fromLTRB(10, 2, 0, 0),
                                       child: Column(
@@ -124,7 +124,7 @@ class _MyPetState extends State<MyPet> {
                                             padding:
                                                 EdgeInsets.fromLTRB(0, 5, 0, 2),
                                             child: Container(
-                                              width: 240,
+                                              width: 200,
                                               child: Text(
                                                   //"nome",
                                                 snapshot.data[index].data["local"],

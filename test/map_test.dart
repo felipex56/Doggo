@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
+//import 'package:location/location.dart'  as LocationManager;
+import 'dart:async';
 
 void main() => runApp(MyApp());
 
@@ -15,6 +18,14 @@ class _MyAppState extends State<MyApp> {
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    _getPosition();
+  }
+
+  _getPosition() async {
+    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+
+    print("****************");
+    print(position);
   }
 
   @override

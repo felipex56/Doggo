@@ -27,27 +27,26 @@ class _WidgetBBarState extends State<WidgetBBar> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-
-
-      if(index == 0 && active == false){
-        active = true;
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomePage()
-          ),
-        );
-      }
-      if(index == 1 && active == true){
-        active = false;
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Profile()
-          ),
-        );
-      }
     });
+
+    if(index == 0 && active == false){
+      active = true;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomePage()
+        ),
+      );
+    }
+    if(index == 1 && active == true){
+      active = false;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Profile()
+        ),
+      );
+    }
   }
   @override
   Widget build(BuildContext context) {

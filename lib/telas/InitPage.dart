@@ -3,10 +3,17 @@ import 'dart:io';
 import 'package:doggo/autentication/autenteicacao.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:doggo/home/camera_helper.dart';
 import 'package:doggo/home/tflite_helper.dart';
 import 'package:doggo/models/tflite_result.dart';
+import 'package:doggo/telas/widgetBar.dart';
+import 'package:google_maps_webservice/geolocation.dart';
+import 'package:geolocator/geolocator.dart';
+
+import 'adicionar2.dart';
 
 
 
@@ -21,6 +28,23 @@ final AuthService _auth = AuthService();
 class _HomePageState extends State<HomePage> {
   File _image;
   List<TFLiteResult> _outputs = [];
+
+  GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(-19.8157, -43.9542);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+    _getPosition();
+  }
+
+  _getPosition() async {
+    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(position.latitude, position.longitude), zoom: 15.0,tilt: 20)));
+    print("****************");
+    print(position);
+  }
 
 
   @override
@@ -45,126 +69,31 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.orange[600],
           elevation:0.0,
           title: Text('Doggo'),
-          actions: <Widget>[
-            FlatButton.icon(
-                icon: Icon(Icons.person_pin,color: Colors.white),
-                label: Text('Sair'),
-                onPressed:() async {
-                  await _auth.signOut();
-                }
-            )
-          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange[600],
-        child: Icon(Icons.image),
-
-        onPressed: _pickImage,
-
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            _buildResult(),
-            _buildImage(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  _buildImage() {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 92.0),
-        child: Container(
-          padding: EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.orange[600].withOpacity(0.5),
-              width: 2,
-            ),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Center(
-            child: _image == null
-                ? Text('Sem imagem')
-                : Image.file(
-              _image,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  _pickImage() async {
-
-    final image = await CameraHelper.pickImage();
-    if (image == null) {
-      return null;
-    }
-
-    final outputs = await TFLiteHelper.classifyImage(image);
-
-    setState(() {
-      _image = image;
-      _outputs = outputs;
-    });
-  }
-
-  _buildResult() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
-      child: Container(
-        height: 150.0,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.orange[600].withOpacity(0.5),
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: _buildResultList(),
-      ),
-    );
-  }
-
-  _buildResultList() {
-    if (_outputs.isEmpty) {
-      return Center(
-        child: Text('Sem resultados'),
-      );
-    }
-
-    return Center(
-      child: ListView.builder(
-        itemCount: _outputs.length,
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(20.0),
-        itemBuilder: (BuildContext context, int index) {
-          return Column(
-            children: <Widget>[
-              Text(
-                '${_outputs[index].label} ( ${(_outputs[index].confidence * 100.0).toStringAsFixed(2)} % )',
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              LinearPercentIndicator(
-                lineHeight: 14.0,
-                percent: _outputs[index].confidence,
-              ),
-            ],
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddPetPage()),
           );
         },
+        backgroundColor: Color(0xffeb6e57),
+        child: Icon(Icons.add_location),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body: GoogleMap(
+        onMapCreated: _onMapCreated,
+        myLocationEnabled: true,
+        initialCameraPosition: CameraPosition(
+          target: _center,
+          zoom: 10.0,
+        ),
+        mapType: MapType.hybrid,
+
+      ),
+      bottomNavigationBar: WidgetBBar(),
     );
   }
+
 }

@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
-import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggo/telas/pets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,12 +7,21 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:doggo/telas/widgetBar.dart';
 import 'package:doggo/autentication/autenteicacao.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:doggo/home/camera_helper.dart';
 import 'package:doggo/home/tflite_helper.dart';
 import 'package:doggo/models/tflite_result.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
 
-void main() => runApp(new AddPetPage());
+//void main() => runApp(new AddPetPage());
+
+const kGoogleApiKey = "AIzaSyAci-DFKpBOF_eJDfU4AEuZctrB3TQ-Rk8";
+
+GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
 class AddPetPage extends StatelessWidget {
   @override
@@ -39,10 +46,12 @@ class _AddPetState extends State<AddPet> {
   String local;
   String raca;
   String description;
-
+  String latitude = '';
+  String longitude = '';
   File _image;
   String _uploadedFileURL;
   List<TFLiteResult> _outputs = [];
+  var txt = TextEditingController();
 
   final idpet = UniqueKey().toString();
 
@@ -118,6 +127,15 @@ class _AddPetState extends State<AddPet> {
                               Container(
                                 width: 172,
                                 child: TextFormField(
+                                  onTap: () async {
+                                    // show input autocomplete with selected mode
+                                    // then get the Prediction selected
+                                    Prediction p = await PlacesAutocomplete.show(
+                                        context: context, apiKey: kGoogleApiKey);
+                                    displayPrediction(p);
+                                    txt.text = p.description;
+                                  },
+                                  controller: txt,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: "Local",
@@ -278,24 +296,35 @@ class _AddPetState extends State<AddPet> {
 
   void createData() async {
     raca = _outputs[0].label;
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final FirebaseUser user = await auth.currentUser();
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      DocumentReference ref = await db.collection('Pet').add({
-        'user': user.uid,
-        'local': '$local',
-        'raca': '$raca',
-        'description': '$description',
-        'perdido': true,
-        'data': new DateTime.now(),
-        'image':idpet,
-      });
-      setState(() => id = ref.documentID);
-      print(ref.documentID);
+    try{
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      final FirebaseUser user = await auth.currentUser();
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+        DocumentReference ref = await db.collection('Pet').add({
+          'user': user.uid,
+          'local': '$local',
+          'raca': '$raca',
+          'description': '$description',
+          'perdido': true,
+          'data': new DateTime.now(),
+          'image':idpet,
+          'latitude':'$latitude',
+          'longitude':'$longitude',
+        });
+        setState(() => id = ref.documentID);
+        print("****************************");
+        print(ref.documentID);
+    }
+    }
+    catch(e){
+      print("*********");
+      print(e);
     }
 
-    uploadFile();
+
+
+    await uploadFile();
 
     Navigator.push(
       context,
@@ -316,6 +345,27 @@ class _AddPetState extends State<AddPet> {
         _uploadedFileURL = fileURL;
       });
     });
+  }
+
+  Future<Null> displayPrediction(Prediction p) async {
+    if (p != null) {
+      PlacesDetailsResponse detail =
+      await _places.getDetailsByPlaceId(p.placeId);
+
+      var placeId = p.placeId;
+      double lat = detail.result.geometry.location.lat;
+      double lng = detail.result.geometry.location.lng;
+
+      var address = await Geocoder.local.findAddressesFromQuery(p.description);
+
+      print(lat);
+      print(lng);
+
+      setState(() {
+        latitude = lat.toString();
+        longitude = lng.toString();
+      });
+    }
   }
 
 }

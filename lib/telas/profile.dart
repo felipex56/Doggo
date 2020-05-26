@@ -1,4 +1,5 @@
-import 'package:doggo/telas/adicionar.dart';
+import 'package:doggo/autentication/autenteicacao.dart';
+import 'package:doggo/telas/adicionar2.dart';
 import 'package:doggo/telas/pets.dart';
 import 'package:doggo/telas/widgetBar.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,8 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
+
+final AuthService _auth = AuthService();
 
 class Profile extends StatefulWidget {
   @override
@@ -107,9 +110,8 @@ class _ProfileState extends State<Profile> {
                             width: 272,
                             height: 47,
                             child: RaisedButton(
-                              onPressed: () async {
-                                // Validate will return true if the form is valid, or false if
-                                // the form is invalid.
+                              onPressed:() async {
+                                await _auth.signOut();
                               },
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(80.0)),
@@ -156,7 +158,7 @@ class _ProfileState extends State<Profile> {
       bottomNavigationBar: WidgetBBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
+          Navigator.pop(
             context,
             MaterialPageRoute(builder: (context) => AddPetPage()),
           );
