@@ -1,3 +1,4 @@
+import 'package:doggo/telas/globals.dart' as globals;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:doggo/models/user.dart';
 import 'package:flutter/foundation.dart';
@@ -36,6 +37,7 @@ class AuthService{
     try{
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
+      globals.email = user.email;
       return _userFromFirebaseUser(user);
     }catch(e){
       print(e.toString());

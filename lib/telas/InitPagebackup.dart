@@ -18,6 +18,7 @@ import 'package:google_maps_webservice/geolocation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'adicionar2.dart';
 import 'detailPet.dart';
+
 class PinData {
   String avatarPath;
   String locationName;
@@ -121,7 +122,7 @@ class _HomePageState extends State<HomePage> {
 //                      builder: (context) => DetailPet(index)));
 //            }
 
-        );
+            );
       });
 
       setState(() {
@@ -236,6 +237,14 @@ class _HomePageState extends State<HomePage> {
       });
     }
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(35.0),
+        child: AppBar(
+          backgroundColor: Colors.orange[600],
+          elevation: 0.0,
+          title: Text('Doggo'),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -326,7 +335,6 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: WidgetBBar(),
     );
   }
-
 
   _buildImage(name) async {
     final ref = FirebaseStorage.instance.ref().child('pets/$name.jpg');

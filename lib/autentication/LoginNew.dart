@@ -4,12 +4,9 @@ import 'package:doggo/autentication/autenteicacao.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
-
 class Login extends StatefulWidget {
-
   final Function toggleView;
-  Login({ this.toggleView });
-
+  Login({this.toggleView});
 
   @override
   _LoginState createState() => _LoginState();
@@ -24,29 +21,9 @@ class _LoginState extends State<Login> {
   String password = '';
   String erro = '';
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(35.0),
-        child: AppBar(
-          backgroundColor: Colors.orange[600].withOpacity(0.0000005),
-          elevation:0.0,
-          title: Text('Login no Doggo'),
-          actions: <Widget>[
-            FlatButton.icon(
-              icon: Icon(Icons.person),
-              label: Text('Register'),
-              onPressed:(){
-                widget.toggleView();
-              }
-            )
-          ],
-        ),
-      ),
       body: Container(
         decoration: BoxDecoration(color: const Color(0xFFeeeeee)),
         child: Stack(
@@ -87,48 +64,59 @@ class _LoginState extends State<Login> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Image.asset('assets/img/dogg.png'),
                       Container(
-                        width: 272,
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "E-mail",
-                          ),
-                          validator: (val) => val.isEmpty ? 'Digite o email' : null,
-                            onChanged: (val){
-                              setState(() => email = val);
-                            }
-                        ),
+                        margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                        child: Image.asset('assets/img/dogg.png'),
                       ),
                       Container(
                         width: 272,
+                        margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
                         child: TextFormField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Senha",
-                          ),
-                            validator: (val) => val.length < 6 ? 'Digite uma senha com pelo menos uma numero' : null,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "E-mail",
+                            ),
+                            validator: (val) =>
+                                val.isEmpty ? 'Digite o email' : null,
+                            onChanged: (val) {
+                              setState(() => email = val);
+                            }),
+                      ),
+                      Container(
+                        width: 272,
+                        margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                        child: TextFormField(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "Senha",
+                            ),
+                            validator: (val) => val.length < 6
+                                ? 'Digite uma senha com pelo menos uma numero'
+                                : null,
                             obscureText: true,
-                            onChanged: (val){
+                            onChanged: (val) {
                               setState(() => password = val);
-                            }
-                        ),
+                            }),
                       ),
                       Container(
                         width: 272,
                         height: 47,
+                        margin: EdgeInsets.fromLTRB(0, 60, 0, 0),
                         child: RaisedButton(
                           onPressed: () async {
                             print(email);
+                            print(email.replaceAll(new RegExp(r"\s+"), ""));
+                            email = email.replaceAll(new RegExp(r"\s+"), "");
                             print(password);
                             // Validate will return true if the form is valid, or false if
                             // the form is invalid
                             if (_formKey.currentState.validate()) {
                               // Process data.
-                              dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                              if (result == null){
-                                setState(() => erro = 'Erro ao fazer Login com esses dados');
+                              dynamic result = await _auth
+                                  .signInWithEmailAndPassword(email, password);
+                              if (result == null) {
+                                setState(() => erro =
+                                    'Erro ao fazer Login com esses dados');
                               }
                             }
                           },
@@ -160,8 +148,15 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-
-                      )
+                      ),
+                      FlatButton(
+                          child: Text(
+                            'Crie sua Conta',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          onPressed: () {
+                            widget.toggleView();
+                          })
                     ],
                   ),
                 ),

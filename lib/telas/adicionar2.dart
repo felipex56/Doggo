@@ -114,18 +114,17 @@ class _AddPetState extends State<AddPet> {
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           _buildImage(),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               Container(
-                                width: 172,
+                                width: 160,
+                                padding: EdgeInsets.fromLTRB(0,0,10,0),
                                 child: TextFormField(
                                   onTap: () async {
                                     // show input autocomplete with selected mode
@@ -149,6 +148,8 @@ class _AddPetState extends State<AddPet> {
                                   onSaved: (value) => local = value,
                                 ),
                               ),
+                              _image == null ?
+
                               FlatButton(
                                 onPressed: _pickImage,
                                 child: Row(
@@ -160,6 +161,9 @@ class _AddPetState extends State<AddPet> {
                                   ],
                                 ),
                               )
+
+                                  : Text(''),
+
                             ],
                           )
                         ],
@@ -202,7 +206,6 @@ class _AddPetState extends State<AddPet> {
           ],
         ),
       ),
-      bottomNavigationBar: WidgetBBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: createData,
         child: Icon(Icons.save),
@@ -215,14 +218,6 @@ class _AddPetState extends State<AddPet> {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 92.0),
         child: Container(
-          padding: EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.orange[600].withOpacity(0.5),
-              width: 2,
-            ),
-            borderRadius: BorderRadius.circular(12),
-          ),
           child: Center(
             child: _image == null
                 ? Text('Sem imagem')
